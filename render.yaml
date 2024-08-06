@@ -1,7 +1,13 @@
-# A Dockerfile-based background worker
+#################################################################
+# render.yaml                                           #
+#################################################################
+
+# List of all services
+services:
+  # A Dockerfile-based background worker
   - type: worker
-    name: queue
+    name: researcher
     runtime: docker
     dockerfilePath: ./Dockerfile # Optional
     # dockerContext: ./sub/src # Optional
-    branch: queue # Optional
+    # branch: queue # Optional
