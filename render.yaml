@@ -1,39 +1,31 @@
 services:
   - type: web
     name: gpt-researcher
-    env: node
+    env: docker
     plan: free  # Adjust according to your needs (e.g., free, standard, pro)
-    buildCommand: 'npm install | pip install -r requirements.txt | python -m uvicorn main:app --reload'
-    startCommand: 'npm start | python -m uvicorn main:app --reload'
+    dockerfilePath: ./Dockerfile  # Ensure your Dockerfile is correctly referenced
     envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3000  # Ensure this matches the port your app listens on
-    autoDeploy: true
-    github:
-      repo: Code2pixels/gpt-researcher
-      branch: main  # Change to the branch you want to deploy from
+      - key: OPENAI_API_KEY
+        fromDatabase: true  # Assumes you have these set in Render's environment
+      - key: TAVILY_API_KEY
+        fromDatabase: true
+      - key: LANGCHAIN_API_KEY
+        fromDatabase: true
+    ports:
+      - port: 8000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
 
-    # Optionally, if your app needs a database, add a managed PostgreSQL database
-    # databases:
-    #   - name: gpt-researcher-db
-    #     plan: free  # Adjust according to your needs (e.g., free, standard, pro)
-    #     envVars:
-    #       - key: DATABASE_URL
-    #         alias: DATABASE_URL
-
-# Optionally, add a static site configuration if your app has a frontend
-# staticSites:
-#   - name: gpt-researcher-frontend
-#     buildCommand: 'npm run build'
-#     publishPath: build  # Adjust according to your app's build output directory
-#     envVars:
-#       - key: NODE_ENV
-#         value: production
-#     autoDeploy: true
-#     github:
-#       repo: Code2pixels/gpt-researcher
-#       branch: main  # Change to the branch you want to deploy from
-
+  - type: web
+    name: gptr-nextjs
+    env: docker
+    plan: free  # Adjust according to your needs (e.g., free, standard, pro)
+    dockerfilePath: ./multi_agents/frontend/Dockerfile.dev  # Path to the Dockerfile for the frontend
+    envVars:
+      - key: CHOKIDAR_USEPOLLING
+        value: true
+    volumes:
+      - path: ./multi_agents/frontend
+        mountPath: /app
+    ports:
+      - port: 3000
+    healthCheckPath: '/'  # Adjust according to your app's health check endpoint
