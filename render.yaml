@@ -8,8 +8,8 @@ services:
       - key: ${OPENAI_API_KEY}
       - key: ${TAVILY_API_KEY}
       - key: ${LANGCHAIN_API_KEY}
-    ports:
-      - port: 8000
+    # ports:
+    #   - port: 8000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
 
   - type: web
@@ -23,6 +23,6 @@ services:
     # volumes:
     #   - path: ./multi_agents/frontend
     #     mountPath: /app
-    ports:
-      - port: 3000
+    # ports:
+    #   - port: 3000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
