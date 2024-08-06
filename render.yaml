@@ -1,0 +1,7 @@
+# A Dockerfile-based background worker
+  - type: worker
+    name: queue
+    runtime: docker
+    dockerfilePath: ./Dockerfile # Optional
+    # dockerContext: ./sub/src # Optional
+    branch: queue # Optional
