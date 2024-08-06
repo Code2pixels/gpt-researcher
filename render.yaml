@@ -5,9 +5,12 @@ services:
     plan: free  # Adjust according to your needs (e.g., free, standard, pro)
     dockerfilePath: ./Dockerfile  # Ensure your Dockerfile is correctly referenced
     envVars:
-      - key: ${OPENAI_API_KEY}
-      - key: ${TAVILY_API_KEY}
-      - key: ${LANGCHAIN_API_KEY}
+      - key: OPENAI_API_KEY
+        values: test
+      - key: TAVILY_API_KEY
+        values: test
+      - key: LANGCHAIN_API_KEY
+        values: test
     # ports:
     #   - port: 8000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
