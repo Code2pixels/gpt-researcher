@@ -5,12 +5,9 @@ services:
     plan: free  # Adjust according to your needs (e.g., free, standard, pro)
     dockerfilePath: ./Dockerfile  # Ensure your Dockerfile is correctly referenced
     envVars:
-      - key: OPENAI_API_KEY
-        fromDatabase: true  # Assumes you have these set in Render's environment
-      - key: TAVILY_API_KEY
-        fromDatabase: true
-      - key: LANGCHAIN_API_KEY
-        fromDatabase: true
+      - key: ${OPENAI_API_KEY}
+      - key: ${TAVILY_API_KEY}
+      - key: ${LANGCHAIN_API_KEY}
     ports:
       - port: 8000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
@@ -23,9 +20,9 @@ services:
     envVars:
       - key: CHOKIDAR_USEPOLLING
         value: true
-    volumes:
-      - path: ./multi_agents/frontend
-        mountPath: /app
+    # volumes:
+    #   - path: ./multi_agents/frontend
+    #     mountPath: /app
     ports:
       - port: 3000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
