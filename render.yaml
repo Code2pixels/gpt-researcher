@@ -6,11 +6,11 @@ services:
     dockerfilePath: ./Dockerfile  # Ensure your Dockerfile is correctly referenced
     envVars:
       - key: OPENAI_API_KEY
-        values: test
+        value: test
       - key: TAVILY_API_KEY
-        values: test
+        value: test
       - key: LANGCHAIN_API_KEY
-        values: test
+        value: test
     # ports:
     #   - port: 8000
     healthCheckPath: '/'  # Adjust according to your app's health check endpoint
