@@ -1,13 +1,39 @@
-#################################################################
-# render.yaml                                           #
-#################################################################
-
-# List of all services
 services:
-  # A Dockerfile-based background worker
-  - type: worker
-    name: researcher
-    runtime: docker
-    dockerfilePath: ./Dockerfile # Optional
-    # dockerContext: ./sub/src # Optional
-    # branch: queue # Optional
+  - type: web
+    name: gpt-researcher
+    env: node
+    plan: free  # Adjust according to your needs (e.g., free, standard, pro)
+    buildCommand: 'npm install | pip install -r requirements.txt | python -m uvicorn main:app --reload'
+    startCommand: 'npm start | python -m uvicorn main:app --reload'
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000  # Ensure this matches the port your app listens on
+    autoDeploy: true
+    github:
+      repo: Code2pixels/gpt-researcher
+      branch: main  # Change to the branch you want to deploy from
+    healthCheckPath: '/'  # Adjust according to your app's health check endpoint
+
+    # Optionally, if your app needs a database, add a managed PostgreSQL database
+    # databases:
+    #   - name: gpt-researcher-db
+    #     plan: free  # Adjust according to your needs (e.g., free, standard, pro)
+    #     envVars:
+    #       - key: DATABASE_URL
+    #         alias: DATABASE_URL
+
+# Optionally, add a static site configuration if your app has a frontend
+# staticSites:
+#   - name: gpt-researcher-frontend
+#     buildCommand: 'npm run build'
+#     publishPath: build  # Adjust according to your app's build output directory
+#     envVars:
+#       - key: NODE_ENV
+#         value: production
+#     autoDeploy: true
+#     github:
+#       repo: Code2pixels/gpt-researcher
+#       branch: main  # Change to the branch you want to deploy from
+
